@@ -3,8 +3,8 @@ import { SignInButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
-    <div>
-      <Button>Click me</Button>
+    <div className="m-5">
+      <SignInButton>Log in</SignInButton>
     </div>
   );
 }
