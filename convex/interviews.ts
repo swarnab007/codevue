@@ -6,7 +6,7 @@ export const getAllInterviews = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
-      return new Error("Unauthorized");
+      throw new Error("Unauthorized");
     }
 
     // store all interviews
@@ -21,7 +21,7 @@ export const getMyInterviews = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
-      return new Error("Unauthorized");
+      throw new Error("Unauthorized");
     }
 
     //
@@ -69,7 +69,7 @@ export const getInterviewByStreamId = query({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
-      return new Error("Unauthorized");
+      throw new Error("Unauthorized");
     }
 
     return await ctx.db
@@ -90,7 +90,7 @@ export const updateInterviewStatus = mutation({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
-      return new Error("Unauthorized");
+      throw new Error("Unauthorized");
     }
     await ctx.db.patch(args.id, {
       status: args.status,
