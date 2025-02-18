@@ -1,7 +1,8 @@
 import { Code } from "lucide-react";
-import { SignedIn, UserButton } from "@clerk/clerk-react";
+
 import DashboardBtn from "./DashboardBtn";
 import { ToggleMode } from "./ToggleMode";
+import { UserButton, SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
 const Navbar = () => {
   return (
@@ -22,6 +23,9 @@ const Navbar = () => {
               <ToggleMode />
               <UserButton />
             </SignedIn>
+            <SignedOut>
+              <RedirectToSignIn />
+            </SignedOut>
           </div>
         </div>
       </header>
