@@ -29,7 +29,7 @@ export const getMyInterviews = query({
       .query("interviews")
       .withIndex("by_candidate_id", (q) =>
         q.eq("candidateId", identity.subject)
-      );
+      ).collect();
 
     return myinterviews;
   },
