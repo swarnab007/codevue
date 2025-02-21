@@ -34,7 +34,7 @@ const Navbar = () => {
           <div className="flex items-center gap-3">
             <Code className="w-6 h-6 text-indigo-400" />
             <span className="text-xl font-semibold text-indigo-400">
-              Codevue
+              codevue
             </span>
           </div>
 

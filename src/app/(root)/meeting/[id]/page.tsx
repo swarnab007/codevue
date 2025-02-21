@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useUser } from "@clerk/nextjs";
 import { StreamCall, StreamTheme } from "@stream-io/video-react-sdk";
@@ -11,28 +11,32 @@ import useGetCallById from "@/hooks/useGetCallById";
 
 const MeetingPage = () => {
   // get ID of Meeting
-  const {id} = useParams();
-  const {isLoaded} = useUser();
+  const { id } = useParams();
+  const { isLoaded } = useUser();
   // state for deciding to show either meeting setup is completed or not
-  const [isSetupComplete, setIsSetupComplete] = useState();
+  const [isSetupComplete, setIsSetupComplete] = useState(false);
   // custom hook which will give us current call and isCallLoading
-  const {call, isCallLoading} = useGetCallById(id || "");
+  const { call, isCallLoading } = useGetCallById(id || "");
 
-  if(isCallLoading || !isLoaded) return <Loader />
+  if (isCallLoading || !isLoaded) return <Loader />;
 
   // if there is no call exists
-  if(!call) {
+  if (!call) {
     return (
       <div className="h-screen flex items-center justify-center">
         <p className="text-2xl font-semibold">Meeting not found</p>
       </div>
-    )
+    );
   }
 
   return (
     <StreamCall call={call}>
       <StreamTheme>
-        {!isSetupComplete ? <MeetingSetup /> : <MeetingRoom />}
+        {!isSetupComplete ? (
+          <MeetingSetup onSetupComplete={() => setIsSetupComplete(true)} />
+        ) : (
+          <MeetingRoom />
+        )}
       </StreamTheme>
     </StreamCall>
   );

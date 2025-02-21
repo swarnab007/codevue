@@ -1,6 +1,5 @@
 import { useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { useRouter } from "next/navigation";
-import { log } from "node:console";
 import toast from "react-hot-toast";
 
 const useMeetingActions = () => {
