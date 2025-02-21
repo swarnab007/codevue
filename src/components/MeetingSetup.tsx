@@ -133,8 +133,8 @@ const MeetingSetup = ({ onSetupComplete }: { onSetupComplete: () => void }) => {
                     Join Meeting
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">
-                    Do not worry, our team is super friendly! We want you to
-                    succeed. 🎉
+                    Please use Desktop Screen for better experience
+                     🎉
                   </p>
                 </div>
               </div>
