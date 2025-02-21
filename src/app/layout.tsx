@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import ConvexClerkProvider from "@/components/providers/ConvexClerkProviders";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { Toaster } from "react-hot-toast"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
               <main className="px-4 sm:px-6 lg:px-8">{children}</main>
             </div>
           </ThemeProvider>
+          <Toaster />
         </body>
       </html>
       </ConvexClerkProvider>

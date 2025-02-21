@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { DialogContent, DialogHeader } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import useMeetingActions from "@/hooks/useMeetingActions";
 
 interface ModalMeetingProps {
   isOpen: boolean;
@@ -18,8 +19,19 @@ const ModalMeeting = ({
   isJoiningMeeting,
 }: ModalMeetingProps) => {
   const [meetLink, setMeetLink] = useState("");
+  const { joinMeeting, createInstantMeeting } = useMeetingActions();
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    if (isJoiningMeeting) {
+      const meetingID = meetLink.split("/").pop();
+      if (meetingID) joinMeeting(meetingID);
+    } else {
+      createInstantMeeting();
+    }
+
+    setMeetLink("");
+    onClose();
+  };
 
   return (
     <Dialog open={isOpen}>
