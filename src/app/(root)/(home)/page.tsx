@@ -1,8 +1,8 @@
 "use client";
 
 import { useUserRole } from "@/hooks/useUserRole";
-import { useQuery } from "convex/react";
-import { api } from "../../../../convex/_generated/api";
+// import { useQuery } from "convex/react";
+// import { api } from "../../../../convex/_generated/api";
 import { QUICK_ACTIONS } from "@/constants";
 import CardAction from "@/components/CardAction";
 import { useState } from "react";
@@ -12,11 +12,11 @@ import ModalMeeting from "@/components/ModalMeeting";
 export default function Home() {
   const router = useRouter();
 
-  const { isInterviewer, isCandidate, isLoading } = useUserRole();
+  const { isInterviewer } = useUserRole();
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState<"start" | "join">();
   // All of candidate interviews
-  const myInterviews = useQuery(api.interviews.getMyInterviews);
+  // const myInterviews = useQuery(api.interviews.getMyInterviews);
 
   const handleAction = (title: string) => {
     switch (title) {

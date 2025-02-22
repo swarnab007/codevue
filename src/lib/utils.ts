@@ -10,10 +10,19 @@ export function cn(...inputs: ClassValue[]) {
 type Interview = Doc<"interviews">;
 type User = Doc<"users">;
 
-export const groupInterviews = (interviews: Interview[]) => {
-  if (!interviews) return {};
+type GroupedInterviews = {
+  succeeded?: Interview[];
+  failed?: Interview[];
+  completed?: Interview[];
+  upcoming?: Interview[];
+};
 
-  return interviews.reduce((acc: any, interview: Interview) => {
+export const groupInterviews = (interviews: Interview[]): GroupedInterviews => {
+  if (!interviews || !Array.isArray(interviews)) return {};
+
+  return interviews.reduce((acc: GroupedInterviews, interview: Interview) => {
+    if (!interview?.startTime) return acc;
+
     const date = new Date(interview.startTime);
     const now = new Date();
 
@@ -48,7 +57,7 @@ export const getInterviewerInfo = (users: User[], interviewerId: string) => {
   const interviewer = users?.find((user) => user.clerkId === interviewerId);
   return {
     name: interviewer?.name || "Unknown Interviewer",
-    image: interviewer?.image,
+    image: interviewer?.image || "",
     initials:
       interviewer?.name
         ?.split(" ")
@@ -58,22 +67,28 @@ export const getInterviewerInfo = (users: User[], interviewerId: string) => {
 };
 
 export const calculateRecordingDuration = (startTime: string, endTime: string) => {
+  if (!startTime || !endTime) return "0 seconds";
+
   const start = new Date(startTime);
   const end = new Date(endTime);
 
+  if (isNaN(start.getTime()) || isNaN(end.getTime())) return "0 seconds";
+
   const duration = intervalToDuration({ start, end });
 
-  if (duration.hours && duration.hours > 0) {
-    return `${duration.hours}:${String(duration.minutes).padStart(2, "0")}:${String(
-      duration.seconds
-    ).padStart(2, "0")}`;
+  const hours = duration.hours ?? 0;
+  const minutes = duration.minutes ?? 0;
+  const seconds = duration.seconds ?? 0;
+
+  if (hours > 0) {
+    return `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   }
 
-  if (duration.minutes && duration.minutes > 0) {
-    return `${duration.minutes}:${String(duration.seconds).padStart(2, "0")}`;
+  if (minutes > 0) {
+    return `${minutes}:${String(seconds).padStart(2, "0")}`;
   }
 
-  return `${duration.seconds} seconds`;
+  return `${seconds} seconds`;
 };
 
 export const getMeetingStatus = (interview: Interview) => {
@@ -85,9 +100,17 @@ export const getMeetingStatus = (interview: Interview) => {
     interview.status === "completed" ||
     interview.status === "failed" ||
     interview.status === "succeeded"
-  )
+  ) {
     return "completed";
-  if (isWithinInterval(now, { start: interviewStartTime, end: endTime })) return "live";
-  if (isBefore(now, interviewStartTime)) return "upcoming";
+  }
+
+  if (isWithinInterval(now, { start: interviewStartTime, end: endTime })) {
+    return "live";
+  }
+
+  if (isBefore(now, interviewStartTime)) {
+    return "upcoming";
+  }
+
   return "completed";
 };

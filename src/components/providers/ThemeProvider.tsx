@@ -4,14 +4,10 @@ import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 // import type { ThemeProviderProps } from "next-themes/dist/types"
 
-import { ReactNode } from "react";
-
-interface ThemeProviderProps {
-  children: ReactNode;
-  [key: string]: any;
-}
-
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+export function ThemeProvider({
+  children,
+  ...props
+}: React.ComponentProps<typeof NextThemesProvider>) {
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {

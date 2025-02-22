@@ -16,15 +16,23 @@ const MeetingSetup = ({ onSetupComplete }: { onSetupComplete: () => void }) => {
 
   // Get the call
   const call = useCall();
-  if (!call) return null;
 
   useEffect(() => {
-    if (ismicEnabled) call.microphone.enable();
-    else call.microphone.disable();
+    if (call) {
+      if (isCamEnabled) call.camera.enable();
+      else call.camera.disable();
+    }
+  }, [isCamEnabled, call?.camera]);
 
-    if (isCamEnabled) call.camera.enable();
-    else call.camera.disable();
-  }, [isCamEnabled, ismicEnabled]);
+  useEffect(() => {
+    if (call) {
+      if (ismicEnabled) call.microphone.enable();
+      else call.microphone.disable();
+    }
+  }, [ismicEnabled, call?.microphone]);
+
+  // Conditional return after all hooks
+  if (!call) return null;
 
   // join to the call
   const handleJoinCall = async () => {
@@ -133,8 +141,7 @@ const MeetingSetup = ({ onSetupComplete }: { onSetupComplete: () => void }) => {
                     Join Meeting
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">
-                    Please use Desktop Screen for better experience
-                     🎉
+                    Please use Desktop Screen for better experience 🎉
                   </p>
                 </div>
               </div>
