@@ -36,7 +36,7 @@ const ScheduleInterview = () => {
   const [creating, setCreating] = useState(false);
 
   const users = useQuery(api.users.getUsers) ?? [];
-  const interviews = useQuery(api.interviews.getAllInterviews) ?? [];
+  // const interviews = useQuery(api.interviews.getAllInterviews) ?? [];
   const createinterview = useMutation(api.interviews.createInterview);
 
   // Fetch all candidates and interviewers

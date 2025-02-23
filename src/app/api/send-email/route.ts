@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
-const mailjet = require("node-mailjet").apiConnect(
-  process.env.MAILJET_API_PUBLIC_KEY,
-  process.env.MAILJET_API_PRIVATE_KEY
+import Mailjet from "node-mailjet";
+
+const mailjet = Mailjet.apiConnect(
+  process.env.MAILJET_API_PUBLIC_KEY!,
+  process.env.MAILJET_API_PRIVATE_KEY!
 );
 
 // Email template
@@ -97,7 +99,8 @@ const emailTemplate = `
 
 export async function POST(request: Request) {
   try {
-    const { to, name, date, title, description, meetingLink } = await request.json();
+    const { to, name, date, title, description, meetingLink } =
+      await request.json();
 
     // Replace placeholders with actual data
     const html = emailTemplate
@@ -108,24 +111,26 @@ export async function POST(request: Request) {
       .replace(/{{meetingLink}}/g, meetingLink);
 
     // Send email using Mailjet
-    const emailResponse = await mailjet.post("send", { version: "v3.1" }).request({
-      Messages: [
-        {
-          From: {
-            Email: "banerjeeswarnab66@gmail.com", // Replace with your verified sender email
-            Name: "CodeVue",
-          },
-          To: [
-            {
-              Email: to,
-              Name: name,
+    const emailResponse = await mailjet
+      .post("send", { version: "v3.1" })
+      .request({
+        Messages: [
+          {
+            From: {
+              Email: "banerjeeswarnab66@gmail.com", // Replace with your verified sender email
+              Name: "CodeVue",
             },
-          ],
-          Subject: "Interview Scheduled",
-          HTMLPart: html,
-        },
-      ],
-    });
+            To: [
+              {
+                Email: to,
+                Name: name,
+              },
+            ],
+            Subject: "Interview Scheduled",
+            HTMLPart: html,
+          },
+        ],
+      });
 
     // Log the Mailjet response
     console.log("Mailjet Response:", emailResponse.body);

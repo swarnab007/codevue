@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import Loader from "@/components/Loader";
 import ScheduleInterview from "@/components/ScheduleInterview";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const page = () => {
+const SchedulePage = () => {
   const router = useRouter();
   const { isInterviewer, isLoading } = useUserRole();
 
@@ -15,4 +15,4 @@ const page = () => {
   return <ScheduleInterview />;
 };
 
-export default page;
+export default SchedulePage;
