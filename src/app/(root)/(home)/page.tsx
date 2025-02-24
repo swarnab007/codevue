@@ -71,24 +71,22 @@ export default function Home() {
               />
             </>
           ) : (
-            ""
-          )}
-        </div>
-
-        <div className="mt-8">
-          {myInterviews === undefined ? (
-            <div className="flex justify-center py-12">
-              <Loader2Icon className="h-8 w-8 animate-spin text-muted-foreground" />
-            </div>
-          ) : myInterviews.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {myInterviews.map((interview) => (
-                <CardMeeting key={interview._id} interview={interview} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12 text-muted-foreground">
-              You have no scheduled interviews at the moment
+            <div className="mt-8">
+              {myInterviews === undefined ? (
+                <div className="flex justify-center py-12">
+                  <Loader2Icon className="h-8 w-8 animate-spin text-muted-foreground" />
+                </div>
+              ) : myInterviews.length > 0 ? (
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {myInterviews.map((interview) => (
+                    <CardMeeting key={interview._id} interview={interview} />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12 text-muted-foreground">
+                  You have no scheduled interviews at the moment
+                </div>
+              )}
             </div>
           )}
         </div>
