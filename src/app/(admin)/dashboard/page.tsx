@@ -28,7 +28,7 @@ import { format } from "date-fns";
 
 type Interview = Doc<"interviews">;
 
-const page = () => {
+const DashboardPage = () => {
   const users = useQuery(api.users.getUsers);
   const interviews = useQuery(api.interviews.getAllInterviews);
   const updateStatus = useMutation(api.interviews.updateInterviewStatus);
@@ -42,6 +42,8 @@ const page = () => {
       await updateStatus({ id: interviewId, status });
       toast.success(`Candidate marked as ${status}`);
     } catch (error) {
+      console.log(error);
+
       toast.error("Failed to update status");
     }
   };
@@ -73,9 +75,7 @@ const page = () => {
                   </Badge>
                 </div>
 
-                <div
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-                >
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {groupedInterviews[category.id].map(
                     (interview: Interview) => {
                       const candidateInfo = getCandidateInfo(
@@ -85,7 +85,10 @@ const page = () => {
                       const startTime = new Date(interview.startTime);
 
                       return (
-                        <Card key={interview._id} className="hover:shadow-md transition-all">
+                        <Card
+                          key={interview._id}
+                          className="hover:shadow-md transition-all"
+                        >
                           {/* CANDIDATE INFO */}
                           <CardHeader className="p-4">
                             <div className="flex items-center gap-3">
@@ -163,4 +166,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default DashboardPage;
