@@ -11,7 +11,7 @@ export const getAllComments = query({
       .query("comments")
       .withIndex("by_interview_id", (q) =>
         q.eq("interviewId", args.interviewId)
-      );
+      ).collect();
 
     return comments;
   },
