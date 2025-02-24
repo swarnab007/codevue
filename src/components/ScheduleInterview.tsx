@@ -25,6 +25,7 @@ import UserInfo from "./UserInfo";
 import { Loader2Icon, XIcon } from "lucide-react";
 import { TIME_SLOTS } from "@/constants";
 import { Calendar } from "./ui/calendar";
+import CardMeeting from "./CardMeeting";
 
 const ScheduleInterview = () => {
   // get current user
@@ -36,7 +37,7 @@ const ScheduleInterview = () => {
   const [creating, setCreating] = useState(false);
 
   const users = useQuery(api.users.getUsers) ?? [];
-  // const interviews = useQuery(api.interviews.getAllInterviews) ?? [];
+  const interviews = useQuery(api.interviews.getAllInterviews) ?? [];
   const createinterview = useMutation(api.interviews.createInterview);
 
   // Fetch all candidates and interviewers
@@ -105,16 +106,6 @@ const ScheduleInterview = () => {
       // Generate the meeting link
       const meetingLink = `http://localhost:3000/meeting/${id}`; // Replace with your actual meeting URL
 
-      // Email content for the candidate
-      const candidateEmailContent = `
-        <p>Hello ${candidate.name},</p>
-        <p>Your interview has been scheduled for <strong>${meetDate.toLocaleString()}</strong>.</p>
-        <p>Interview Title: <strong>${title}</strong></p>
-        <p>Description: <strong>${description}</strong></p>
-        <p>Meeting Link: <a href="${meetingLink}">Join Meeting</a></p>
-        <p>Best of luck!</p>
-      `;
-
       // Send email to the candidate using Mailjet
       await fetch("/api/send-email", {
         method: "POST",
@@ -123,8 +114,11 @@ const ScheduleInterview = () => {
         },
         body: JSON.stringify({
           to: candidate.email,
-          subject: "Interview Scheduled",
-          html: candidateEmailContent,
+          name: candidate.name,
+          date: meetDate.toLocaleString(),
+          title: title,
+          description: description,
+          meetingLink: meetingLink,
         }),
       });
 
@@ -355,6 +349,23 @@ const ScheduleInterview = () => {
           </DialogContent>
         </Dialog>
       </div>
+
+      {/* MEETING CARD ND LOADING STATE */}
+      {!interviews ? (
+        <Loader2Icon className="size-8 animate-spin text-muted-foreground" />
+      ) : interviewers.length > 0 ? (
+        <div className="space-y-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {interviews.map((interview) => (
+              <CardMeeting key={interview._id} interview={interview} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="text-center py-12 text-muted-foreground">
+          No interviews scheduled Yet
+        </div>
+      )}
     </div>
   );
 };
