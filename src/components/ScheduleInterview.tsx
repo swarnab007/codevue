@@ -104,7 +104,7 @@ const ScheduleInterview = () => {
       }
 
       // Generate the meeting link
-      const meetingLink = `http://localhost:3000/meeting/${id}`; // Replace with your actual meeting URL
+      const meetingLink = `https://codevue07.vercel.app/meeting/${id}`; // Replace with your actual meeting URL
 
       // Send email to the candidate using Mailjet
       await fetch("/api/send-email", {
