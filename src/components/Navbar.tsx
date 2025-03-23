@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { SparklesIcon, Code, Menu } from "lucide-react"; // Added Menu icon for mobile
+import { SparklesIcon, Code, Menu, Bot } from "lucide-react"; // Added Menu icon for mobile
 import { Button } from "./ui/button";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useState } from "react"; // Added useState for mobile menu toggle
@@ -18,6 +18,24 @@ const DashboardBtn = () => {
         <Button className="gap-2 font-medium" size="sm">
           <SparklesIcon className="size-4" />
           Dashboard
+        </Button>
+      </Link>
+    </div>
+  );
+};
+
+const MockInterviewBtn = () => {
+  const { isLoading, isCandidate } = useUserRole();
+
+  // Only show the button if the user is a candidate
+  if (!isCandidate || isLoading) return null;
+
+  return (
+    <div>
+      <Link href="/mock-interview" passHref>
+        <Button className="gap-2 font-medium" size="sm">
+          <Bot className="size-4" />
+          Take a Mock Interview
         </Button>
       </Link>
     </div>
@@ -50,6 +68,7 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center gap-4">
             <SignedIn>
               <DashboardBtn />
+              <MockInterviewBtn />
               <ToggleMode />
               <UserButton />
             </SignedIn>

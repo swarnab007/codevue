@@ -64,25 +64,203 @@
     --input: 246 100% 14.9%;
     --ring: 246 47% 60%;
   }
-}
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-
-
-@layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
+  p {
+    @apply text-foreground; /* Use Tailwind's foreground color */
+  }
+
+  h2 {
+    @apply text-3xl font-semibold;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+
+  ul {
+    @apply list-disc list-inside;
+  }
+
+  li {
+    @apply text-foreground; /* Use Tailwind's foreground color */
+  }
 }
 
+@layer components {
+  .btn-call {
+    @apply inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-green-500 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-green-600 hover:bg-green-600 min-w-28 cursor-pointer items-center justify-center overflow-visible;
+
+    span {
+      @apply bg-green-500 h-[85%] w-[65%];
+    }
+  }
+
+  .btn-disconnect {
+    @apply inline-block px-7 py-3 text-sm font-bold leading-5 text-white transition-colors duration-150 bg-red-500 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-red-600 hover:bg-red-600 min-w-28;
+  }
+
+  .btn-upload {
+    @apply flex min-h-14 w-full items-center justify-center gap-1.5 rounded-md bg-neutral-800 rounded-full min-h-12 px-5 cursor-pointer border border-input overflow-hidden;
+  }
+
+  .btn-primary {
+    @apply w-fit bg-blue-500 text-white hover:bg-blue-600 rounded-full font-bold px-5 cursor-pointer min-h-10;
+  }
+
+  .btn-secondary {
+    @apply w-fit bg-neutral-800 text-blue-500 hover:bg-neutral-800/80 rounded-full font-bold px-5 cursor-pointer min-h-10;
+  }
+
+  .card-border {
+    @apply border-gradient p-0.5 rounded-2xl w-fit;
+  }
+
+  .card {
+    @apply dark-gradient rounded-2xl min-h-full;
+  }
+
+  .form {
+    @apply w-full;
+
+    .label {
+      @apply text-foreground font-normal;
+    }
+
+    .input {
+      @apply bg-neutral-800 rounded-full min-h-12 px-5 placeholder:text-foreground;
+    }
+
+    .btn {
+      @apply w-full bg-blue-500 text-white hover:bg-blue-600 rounded-full min-h-10 font-bold px-5 cursor-pointer;
+    }
+  }
+
+  .call-view {
+    @apply flex sm:flex-row flex-col gap-10 items-center justify-between w-[80%];
+
+    h3 {
+      @apply text-center text-blue-500 mt-5;
+    }
+
+    .card-interviewer {
+      @apply flex-center flex-col gap-2 p-7 h-[400px] blue-gradient-dark rounded-lg border-2 border-blue-500/50 flex-1 sm:basis-1/2 w-full;
+    }
+
+    .avatar {
+      @apply z-10 flex items-center justify-center blue-gradient rounded-full size-[120px] relative;
+
+      .animate-speak {
+        @apply absolute inline-flex size-5/6 animate-ping rounded-full bg-blue-500 opacity-75;
+      }
+    }
+
+    .card-border {
+      @apply border-gradient p-0.5 rounded-2xl flex-1 sm:basis-1/2 w-full h-[400px] max-md:hidden;
+    }
+
+    .card-content {
+      @apply flex flex-col gap-2 justify-center items-center p-7 dark-gradient rounded-2xl min-h-full;
+    }
+  }
+
+  .transcript-border {
+    @apply border-gradient p-0.5 rounded-2xl w-full;
+
+    .transcript {
+      @apply dark-gradient rounded-2xl min-h-12 px-5 py-3 flex items-center justify-center;
+
+      p {
+        @apply text-lg text-center text-white;
+      }
+    }
+  }
+
+  .section-feedback {
+    @apply flex flex-col gap-8 max-w-5xl mx-auto max-sm:px-4 text-lg leading-7;
+
+    .buttons {
+      @apply flex w-full justify-evenly gap-4 max-sm:flex-col max-sm:items-center;
+    }
+  }
+
+  .auth-layout {
+    @apply flex items-center justify-center mx-auto max-w-7xl min-h-screen max-sm:px-4 max-sm:py-8;
+  }
+
+  .root-layout {
+    @apply flex mx-auto max-w-7xl flex-col gap-12 my-12 px-16 max-sm:px-4 max-sm:my-8;
+  }
+
+  .card-cta {
+    @apply flex flex-row blue-gradient-dark rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4;
+  }
+
+  .interviews-section {
+    @apply flex flex-wrap gap-4 max-lg:flex-col w-full items-stretch;
+  }
+
+  .interview-text {
+    @apply text-lg text-center text-white;
+  }
+
+  .progress {
+    @apply h-1.5 text-[5px] font-bold bg-blue-500 rounded-full flex-center;
+  }
+
+  .tech-tooltip {
+    @apply absolute bottom-full mb-1 hidden group-hover:flex px-2 py-1 text-xs text-white bg-gray-700 rounded-md shadow-md;
+  }
+
+  .card-interview {
+    @apply dark-gradient rounded-2xl min-h-full flex flex-col p-6 relative overflow-hidden gap-10 justify-between;
+
+    .badge-text {
+      @apply text-sm font-semibold capitalize;
+    }
+  }
+}
+
+@layer utilities {
+  .dark-gradient {
+    @apply bg-gradient-to-b from-[#1A1C20] to-[#08090D];
+  }
+
+  .border-gradient {
+    @apply bg-gradient-to-b from-[#4B4D4F] to-[#4B4D4F33];
+  }
+
+  .blue-gradient-dark {
+    @apply bg-gradient-to-b from-[#171532] to-[#08090D];
+  }
+
+  .blue-gradient {
+    @apply bg-gradient-to-l from-[#FFFFFF] to-[#CAC5FE];
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
